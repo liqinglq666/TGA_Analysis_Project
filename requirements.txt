@@ -1,4 +1,6 @@
 pandas
 numpy
 matplotlib
+PyQt6
 openpyxl
+scipy
