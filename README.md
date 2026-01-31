@@ -1,104 +1,100 @@
-# TGA-CH-Analyzer: Automated Quantification Framework for Cementitious Materials
+# 🧪 TGA-CH-Analyzer (Thesis Savior Edition)
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-007EC6)
-![Domain](https://img.shields.io/badge/Domain-Civil_Engineering-orange)
+![Civil Engineering](https://img.shields.io/badge/Domain-Civil_Engineering-orange)
 ![Methodology](https://img.shields.io/badge/Method-Dynamic_Baseline_Subtraction-green)
+![Status](https://img.shields.io/badge/Mood-Save_My_Hairline-red)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-## 📝 项目摘要 (Abstract)
+## 👋 这是一个什么神仙工具？ (Introduction)
 
-**TGA-CH-Analyzer** 是一款专为水泥基复合材料（如 ECC、UHPC）研发的**热重分析 (TGA) 数据自动化处理工具**。
+各位同门的师兄师姐师弟师妹，你们好！👋
 
-针对传统切线法（Tangential Method）在 400–500 °C 温区无法剥离 C-S-H 凝胶脱水干扰、导致氢氧化钙 (CH) 含量高估的系统性误差，本项目提出并实现了一种基于 **DTG 动态基线扣除 (Dynamic Baseline Subtraction, DBS)** 的量化算法。该工具集成了数据清洗、峰位自动识别、背景校正及批量批处理功能，旨在显著提升土木工程材料研究中数据分析的精度与效率。
+如果你也在折腾水泥基材料（ECC, UHPC 等），那你一定经历过这种**“科研至暗时刻”**：
+面对几十个 TGA 数据文件，在 Excel 里手动拉切线、算面积、扣背景，眼花缭乱搞了一整天，结果——
 
----
+> **Reviewer #2 (审稿人)**：*"Ref.1 claim that the weight loss at 400-500°C includes the dehydration of C-S-H gel. Your calculation of CH content is obviously overestimated."*
+>
+> **(翻译)**：*"你把 C-S-H 的失重也算进去了，数据偏大，重算。"* 🌚
 
-## 🔬 方法论与算法原理 (Methodology)
-
-### 1. 现有方法的局限性 (Limitations of Conventional Methods)
-在水泥水化产物的热重分析中，氢氧化钙 (CH) 的分解温区 (400–500 °C) 往往与 C-S-H 凝胶的层间水脱水区间发生重叠。
-* **传统方法缺陷**：直接计算质量损失 ($\Delta m$) 会将 C-S-H 的持续失重错误归算为 CH，导致实验结果被人为高估。
-* **审稿人关注点**：顶级期刊（如 *Cement and Concrete Research*）审稿人常要求对这一背景误差进行修正。
-
-### 2. 动态基线扣除算法 (The DBS Algorithm)
-本工具采用以下逻辑进行修正计算：
-1.  **特征峰定位 (Peak Identification)**：利用微分热重曲线 (DTG) 的二阶导数特征，精准定位 CH 的起始与终止分解温度 ($T_{start}, T_{end}$)。
-2.  **背景漂移拟合 (Background Drift Modeling)**：基于区间两侧的 DTG 速率构建线性或非线性基线，模拟 C-S-H 的背景失重行为。
-3.  **净含量计算 (Net Content Quantification)**：
-    从总质量损失中剥离背景值，公式如下：
-    $$CH_{content} = ( \Delta m_{total} - \Delta m_{background} ) \times \frac{M_{Ca(OH)_2}}{M_{H_2O}}$$
-
-> **验证 (Validation)**：经对比测试，本算法计算结果与 XRD Rietveld 全谱拟合定量结果具有高度一致性。
+为了解决这个让无数土木研究生**头秃**的问题，拒绝重复造轮子，我开发了这个 **自动化 TGA 分析神器**。
 
 ---
 
-## 🚀 主要特性 (Key Features)
+## 🧠 核心原理：它是怎么说服审稿人的？ (Methodology)
 
-* **高精度背景校正**：自动识别并扣除 C-S-H 脱水背景，输出修正后的 CH 净含量。
-* **智能批处理流程**：支持读取文件夹内多组实验数据，自动匹配 TG/DTG 曲线，秒级完成数十个样品的分析。
-* **自适应信号平滑**：内置 Savitzky-Golay 滤波器，有效去除实验设备产生的随机噪点，优化寻峰准确度。
-* **出版级图表输出**：生成的分析图表包含基线示意与积分区域，可直接用于学术论文插图。
+我们不能简单粗暴地用“质量差”来算 CH，那样太 Low 了。
+本工具内置了一套 **动态基线扣除算法 (Dynamic Baseline Subtraction, DBS)**，逻辑非常性感：
 
----
+1.  **自动寻峰 (Auto-Peak)**：利用二阶导数特征，自动锁定 DTG 曲线上的 CH 分解温区 ($T_{start}$ & $T_{end}$)，告别肉眼估算。
+2.  **基线重构 (Baseline Modeling)**：取峰位两侧的 DTG 速率，构建一条“虚拟基线”，模拟并**扣除 C-S-H 凝胶的背景失重**。
+3.  **净值计算 (Net Calculation)**：
+    $$CH_{\text{content}} = (\Delta m_{\text{total}} - \Delta m_{\text{background}}) \times \frac{M_{Ca(OH)_2}}{M_{H_2O}}$$
 
-## 💾 快速部署 (Deployment)
-
-为方便非编程背景的研究人员使用，本项目提供编译好的可执行文件。
-
-* **Windows 可执行文件**：`TGA_CH_Analyzer.exe`
-* **下载地址**：[百度网盘链接](https://pan.baidu.com/s/1Dj-8nSoKqELOmWSbOysHmg) (提取码: `1234`)
+> **✨ 实测战绩**：该算法计算出的 CH 含量与 **XRD (Rietveld 全谱精修)** 定量结果吻合度极高！(用来回复审稿人意见非常好用，亲测有效)
 
 ---
 
-## 📂 数据规范 (Input Specifications)
+## 🚀 功能亮点 (Features)
 
-为确保算法收敛，输入数据需遵循以下 **Excel (.xlsx)** 结构规范：
-
-### 1. 文件结构 (Structure)
-* **Sheet 1**: 存储 TG 数据 (Mass Loss, %)。
-* **Sheet 2**: 存储 DTG 数据 (Derivative Mass Loss, %/min)。
-    *(注：程序依据索引读取，Sheet 命名不影响运行)*
-
-### 2. 数据排布 (Layout)
-数据需按 **[温度, 数值]** 双列格式成对排列。
-* **Row 7**: 样品标识符 (Sample ID)。
-* **Row 8+**: 数值矩阵 (Numeric Data)。
-
-| Column Index | A | B | C | D |
-| :--- | :---: | :---: | :---: | :---: |
-| **Attribute** | **Temp ($T_1$)** | **Value ($V_1$)** | **Temp ($T_2$)** | **Value ($V_2$)** |
-| **Row 7 (ID)** | - | **Sample_A** | - | **Sample_B** |
-| **Row 8 (Data)** | 30.0 | 100.0 | 30.0 | 100.0 |
+* **⚡ 拒绝手动，批量处理**：丢进去一个文件夹的 Excel，点击“开始”，喝口水的功夫，几十个样品的 CH 含量全算好了。
+* **🧹 专治手抖，智能平滑**：实验仪器老化？数据有噪点？内置 `Savitzky-Golay` 滤波器，自动把曲线熨平，顺滑得像德芙。
+* **📊 出版级绘图**：生成的图表自带基线、填充区和标注，**长得跟 Origin 画出来的一样**，直接粘进论文/PPT 毫无违和感。
+* **🧠 智能读取**：不管你把样品名写在 Excel 表头的左边还是右边，它都能顺藤摸瓜找出来。
 
 ---
 
-## 🛠️ 开发环境配置 (Development Setup)
+## 📸 效果展示 (Screenshots)
 
-若需对源码进行二次开发，请按以下步骤配置环境：
-
-1.  **克隆仓库**
-    ```bash
-    git clone [https://github.com/liqinglq666/TGA_Analysis_Project.git](https://github.com/liqinglq666/TGA_Analysis_Project.git)
-    ```
-
-2.  **安装依赖库**
-    建议使用 Python 3.8+ 环境：
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  **启动主程序**
-    ```bash
-    python gui_main.py
-    ```
+*(这里是软件运行的买家秀，展示一下咱们专业的 GUI)*
+<img width="1924" height="1322" alt="image" src="https://github.com/user-attachments/assets/79df317b-0f5c-448c-b145-4a58114f6c0a" />
 
 ---
 
-## 🤝 贡献与引用 (Contribution & Citation)
+## 💾 懒人下载区 (Download)
 
-本项目致力于为土木工程材料领域提供开源、透明的数据分析解决方案。
-* **Bug 反馈**：请通过 Issue 提交详细描述。
-* **代码贡献**：欢迎 Pull Request 优化算法逻辑。
+我不指望大家都会配 Python 环境（毕竟咱们是搞土木的，不是搞 CS 的）。
+所以我打包好了 **.exe 文件**，**无需安装 Python**，下载下来双击就能跑。
 
-## 📄 许可证 (License)
-本项目基于 [MIT License](LICENSE) 开源发布。
+* **Windows 绿色版**：`TGA_CH_Analyzer.exe`
+* **百度网盘下载**：[点这里偷懒](https://pan.baidu.com/s/1Dj-8nSoKqELOmWSbOysHmg)
+* **提取码**：`1234`
+
+---
+
+## 📂 数据格式预警 (Data Format)
+
+**⚠️ 高能预警：为了不报错，请务必把你的 Excel 整理成这样！**
+
+Excel 需要包含两个 Sheet（顺序不能反）：
+1.  **Sheet1**: 放 TG 数据 (%)
+2.  **Sheet2**: 放 DTG 数据 (%/min)
+
+**列排布格式（紧凑型）：**
+
+| Excel 行号 | 说明 | 示例 (Sample A) | 示例 (Sample B) |
+| :--- | :--- | :--- | :--- |
+| **Row 1** | 表头 (给人看的) | Temp / TG | Temp / TG |
+| **Row 2** | 单位 | °C / % | °C / % |
+| **Row 3** | **样品名 (给程序看的)** | **ECC-7d** 👈 | **ECC-28d** 👈 |
+| **Row 4+** | **纯数据区域** | 30.0 / 100.0 | 30.0 / 100.0 |
+
+> **碎碎念**：
+> * **Row 3** 是抓取样品名的关键！别空着！
+> * 数据区域（Row 4 以后）**千万别合并单元格**，那是 Excel 的禁术，程序会炸的。💥
+
+---
+
+## 🛠️ 大佬专用 (For Developers)
+
+如果你嫌我的界面丑，或者想自己魔改算法，欢迎 Clone 代码回去自己玩：
+
+```bash
+# 1. 把代码搬回家
+git clone [https://github.com/liqinglq666/TGA_Analysis_Project.git](https://github.com/liqinglq666/TGA_Analysis_Project.git)
+
+# 2. 装一下库 (建议 Python 3.8+)
+pip install -r requirements.txt
+
+# 3. 启动引擎
+python gui_main.py
