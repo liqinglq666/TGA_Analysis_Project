@@ -1,0 +1,11 @@
+# 忽略打包生成的文件夹 (这些就是导致100MB报错的元凶)
+build/
+dist/
+*.spec
+
+# 忽略 PyCharm 自己的配置
+.idea/
+
+# 忽略 Python 缓存
+__pycache__/
+*.pyc
