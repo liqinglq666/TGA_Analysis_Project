@@ -1,4 +1,4 @@
-# 🧪 TGA-CH-Analyzer (Thesis Savior Edition)
+# 🧪 TGA-CH-Analyzer 
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-007EC6)
 ![Civil Engineering](https://img.shields.io/badge/Domain-Civil_Engineering-orange)
@@ -27,16 +27,21 @@
 
 1.  **积分区间定义 (Integration Range)**
     $$T_{start} = T_{peak} - \Delta T, \quad T_{end} = T_{peak} + \Delta T$$
-    *(Default $\Delta T = 40^\circ C$)*
+    *(代码默认 $\Delta T = 40^\circ C$)*
 
-2.  **背景漂移速率 (Background Drift Rate)**
-    假设 C-S-H 失重呈线性漂移，取区间两侧 DTG 平均速率：
+2.  **背景失重速率估算 (Background Drift Rate)**
+    假设 C-S-H 失重在区间内呈线性漂移。利用区间两端的 DTG 值（失重速率，单位 %/min）取平均值：
     $$\bar{v}_{bg} = \frac{|DTG(T_{start})| + |DTG(T_{end})|}{2}$$
-    转换为对温度的微分 ($\beta$ 为升温速率)：
-    $$Slope_{bg} = \frac{\bar{v}_{bg}}{\beta} \quad (\% / ^\circ C)$$
 
-3.  **净 CH 失重 (Net Mass Loss)**
-    $$\Delta m_{net} = \Delta m_{total} - [ Slope_{bg} \times (T_{end} - T_{start}) ]$$
+    由于 TG 坐标轴为温度，需引入升温速率 ($\beta$, Heating Rate) 将其转换为对温度的微分：
+    $$Slope_{bg} = \frac{\bar{v}_{bg}}{\beta} \quad (\text{单位：} \% / ^\circ C)$$
+
+3.  **背景质量损失 (Background Mass Loss)**
+    C-S-H 在该区间内的积分面积（即背景梯形面积）：
+    $$\Delta m_{bg} = Slope_{bg} \times (T_{end} - T_{start})$$
+
+4.  **修正后的净 CH 失重 (Net CH Mass Loss)**
+    $$\Delta m_{net} = \Delta m_{total} - \Delta m_{bg}$$
 
 > **✨ 实测战绩**：该算法计算出的 CH 含量与 **XRD (Rietveld 全谱精修)** 定量结果吻合度极高！(用来回复审稿人意见非常好用，亲测有效)
 
