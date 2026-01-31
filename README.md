@@ -65,7 +65,9 @@
 
 ## 📸 界面长这样 (Screenshots)
 
-*(V5.1 新版界面：左边调参，右边实时看图和数据，不用来回切窗口)*
+*( 界面：左边调参，右边实时看图和数据，不用来回切窗口)*
+<img width="1993" height="1248" alt="image" src="https://github.com/user-attachments/assets/23a377e3-d334-41e9-9412-644706eb235e" />
+
 <img width="100%" alt="Software UI" src="https://github.com/user-attachments/assets/0b487359-4492-4430-aed5-61d74069c631" />
 
 ---
@@ -128,24 +130,12 @@
 > **💡 懒人秘籍**：如果你实在看不懂，就把你仪器导出的原始 Excel 打开，把**数据部分 (数字)** 复制粘贴到我给的这个格式里，第3行填上名，齐活！
 
 ---
-## 🛠️ 极客/魔改通道 (For the "CS-Curious" Civil Engineers)
+## 🌍 适用领域 (Applications)
 
-如果你也是个**“不务正业”**、不想打灰只想敲代码的土木人；
-或者你觉得我的 UI 配色像“工地蓝”，想自己动手整得花哨点；
-欢迎 Clone 代码回去魔改！
+虽然本工具名为 `CH-Analyzer`，但其核心的**自适应解耦算法**具有极强的通用性。
+只要调整参数，它完全适用于以下场景的定量分析：
 
-但在此之前，请签署这份**《不吐槽代码烂协议》**：
-*(本人乃土木出身，代码架构全凭直觉，变量命名全靠翻译软件。如果你看到了像 `shit_mountain_v2` 这样的函数名，请假装没看见。)*
-
-**准备好进入“混凝土与 Python 齐飞”的世界了吗？**
-
-```bash
-# 1. 把这一坨代码搬回你的“赛博工地”
-git clone [https://github.com/liqinglq666/TGA_Analysis_Project.git](https://github.com/liqinglq666/TGA_Analysis_Project.git)
-
-# 2. 进场，安装各种“预制构件” (依赖库)
-cd TGA_Analysis_Project
-pip install -r requirements.txt
-
-# 3. 点火，起飞！(假装自己是全栈工程师)
-python gui_main.py
+1.  **火山灰活性评估 (Pozzolanic Reactivity)**：粉煤灰、矿渣、偏高岭土体系中 CH 的消耗量测定。
+2.  **碳化耐久性 (Carbonation)**：调整温区至 600-800°C，即可精准定量碳酸钙 ($CaCO_3$) 含量。
+3.  **复杂低碳体系 (LC3/Geopolymers)**：在多相重叠的复杂背景下，精准提取目标相的质量损失。
+4.  **通用热分析**：任何符合“特征峰+背景漂移”模式的 TGA 数据。
