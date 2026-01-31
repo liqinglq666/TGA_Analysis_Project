@@ -21,15 +21,22 @@
 
 ---
 
-## 🧠 核心原理：它是怎么说服审稿人的？ (Methodology)
+### 🧮 算法数学模型 (Mathematical Model)
 
-我们不能简单粗暴地用“质量差”来算 CH，那样太 Low 了。
-本工具内置了一套 **动态基线扣除算法 (Dynamic Baseline Subtraction, DBS)**，逻辑非常性感：
+本工具严格遵循以下热力学计算逻辑：
 
-1.  **自动寻峰 (Auto-Peak)**：利用二阶导数特征，自动锁定 DTG 曲线上的 CH 分解温区 ($T_{start}$ & $T_{end}$)，告别肉眼估算。
-2.  **基线重构 (Baseline Modeling)**：取峰位两侧的 DTG 速率，构建一条“虚拟基线”，模拟并**扣除 C-S-H 凝胶的背景失重**。
-3.  **净值计算 (Net Calculation)**：
-    $$CH_{\text{content}} = (\Delta m_{\text{total}} - \Delta m_{\text{background}}) \times \frac{M_{Ca(OH)_2}}{M_{H_2O}}$$
+1.  **积分区间定义 (Integration Range)**
+    $$T_{start} = T_{peak} - \Delta T, \quad T_{end} = T_{peak} + \Delta T$$
+    *(Default $\Delta T = 40^\circ C$)*
+
+2.  **背景漂移速率 (Background Drift Rate)**
+    假设 C-S-H 失重呈线性漂移，取区间两侧 DTG 平均速率：
+    $$\bar{v}_{bg} = \frac{|DTG(T_{start})| + |DTG(T_{end})|}{2}$$
+    转换为对温度的微分 ($\beta$ 为升温速率)：
+    $$Slope_{bg} = \frac{\bar{v}_{bg}}{\beta} \quad (\% / ^\circ C)$$
+
+3.  **净 CH 失重 (Net Mass Loss)**
+    $$\Delta m_{net} = \Delta m_{total} - [ Slope_{bg} \times (T_{end} - T_{start}) ]$$
 
 > **✨ 实测战绩**：该算法计算出的 CH 含量与 **XRD (Rietveld 全谱精修)** 定量结果吻合度极高！(用来回复审稿人意见非常好用，亲测有效)
 
