@@ -1,0 +1,26 @@
+# --- 编译与打包 (Build Artifacts) ---
+# 过滤 PyInstaller 打包生成的缓存和最终程序
+build/
+dist/
+*.spec
+
+# --- Python 运行缓存 (Python Cache) ---
+# 过滤字节码文件，防止不同版本的 Python 环境冲突
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- IDE 配置文件 (IDE Settings) ---
+# 建议过滤 PyCharm 的私有配置，避免泄露本地绝对路径
+.idea/
+.vscode/
+
+# --- 实验数据与日志 (Data & Logs) ---
+# 如果不希望上传超大 Excel 或日志，可取消下方注释
+# *.log
+# data/*.xlsx
+
+# --- IDE Settings ---
+.idea/
+.vscode/
