@@ -1,0 +1,8 @@
+pandas
+numpy
+matplotlib
+PyQt6==6.7.1
+PyQt6-Qt6==6.7.3
+openpyxl
+scipy
+pytest
